@@ -4,18 +4,17 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-
 const input = document.querySelector('#datetime-picker');
 const btn = document.querySelector('[data-start]');
-const days = document.querySelector('[data-days]');
-const hours = document.querySelector('[data-hours]');
-const minutes = document.querySelector('[data-minutes]');
-const seconds = document.querySelector('[data-seconds]');
+const daysEl = document.querySelector('[data-days]');
+const hoursEl = document.querySelector('[data-hours]');
+const minutesEl = document.querySelector('[data-minutes]');
+const secondsEl = document.querySelector('[data-seconds]');
 
-const currentDate = new Date();
+
 let userSelectedDate;
 
-let flatpickrInstance = new flatpickr('#datetime-picker', {
+flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -23,6 +22,7 @@ let flatpickrInstance = new flatpickr('#datetime-picker', {
 
   onClose: function (selectedDates) {
     userSelectedDate = selectedDates[0];
+    const currentDate = new Date();
     if (userSelectedDate > currentDate) {
       btn.disabled = false;
     } else {
@@ -38,17 +38,29 @@ let flatpickrInstance = new flatpickr('#datetime-picker', {
   },
 });
 
+btn.addEventListener('click',() => {
+  if(btn.disabled === false){
+    setInterval(updateCounter, 1000);
+    btn.disabled = true;
+    input.disabled = true;
+  }
+});
+
 function updateCounter() {
+  const currentDate = new Date();
   const diff = userSelectedDate - currentDate;
+
+  if (diff <= 0) {
+    clearInterval(updateCounter);
+    return;
+  }
   const { days, hours, minutes, seconds } = convertMs(diff);
 
-  days.textContent = addLeadingZero(days);
-  hours.textContent = addLeadingZero(hours);
-  minutes.textContent = addLeadingZero(minutes);
-  seconds.textContent = addLeadingZero(seconds);
+  daysEl.textContent = addLeadingZero(days);
+  hoursEl.textContent = addLeadingZero(hours);
+  minutesEl.textContent = addLeadingZero(minutes);
+  secondsEl.textContent = addLeadingZero(seconds);
 }
-
-btn.addEventListener("click", () => setInterval(updateCounter, 1000));
 
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
@@ -62,9 +74,8 @@ function convertMs(diff) {
 
   const days = Math.floor(diff / day);
   const hours = Math.floor((diff % day) / hour);
-  const minutes = Math.floor((diff % hour) / minute);
-  const seconds = Math.floor((diff % minute) / second);
+  const minutes = Math.floor(((diff % day) % hour) / minute);
+  const seconds = Math.floor((((diff % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
 }
-
