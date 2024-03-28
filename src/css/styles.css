@@ -69,6 +69,15 @@ body {
   border: none;
 }
 
+.btn-timer:enabled{
+  background: #4e75ff;
+  color: #fff;
+}
+
+.btn-timer:enabled:hover{
+  background-color: #6c8cff;;
+}
+
 .timer {
   display: flex;
   flex-direction: row;
