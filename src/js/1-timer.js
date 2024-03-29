@@ -4,13 +4,14 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const input = document.querySelector('#datetime-picker');
-const btn = document.querySelector('[data-start]');
-const daysEl = document.querySelector('[data-days]');
-const hoursEl = document.querySelector('[data-hours]');
-const minutesEl = document.querySelector('[data-minutes]');
-const secondsEl = document.querySelector('[data-seconds]');
-
+const elements = {
+  input: document.querySelector('#datetime-picker'),
+  btn: document.querySelector('[data-start]'),
+  days: document.querySelector('[data-days]'),
+  hours: document.querySelector('[data-hours]'),
+  minutes: document.querySelector('[data-minutes]'),
+  seconds: document.querySelector('[data-seconds]'),
+};
 
 let userSelectedDate;
 
@@ -24,9 +25,9 @@ flatpickr('#datetime-picker', {
     userSelectedDate = selectedDates[0];
     const currentDate = new Date();
     if (userSelectedDate > currentDate) {
-      btn.disabled = false;
+      elements.btn.disabled = false;
     } else {
-      btn.disabled = true;
+      elements.btn.disabled = true;
       iziToast.show({
         title: 'Error',
         message: 'Illegal options',
@@ -38,11 +39,11 @@ flatpickr('#datetime-picker', {
   },
 });
 
-btn.addEventListener('click',() => {
-  if(btn.disabled === false){
+elements.btn.addEventListener('click', () => {
+  if (elements.btn.disabled === false) {
     setInterval(updateCounter, 1000);
-    btn.disabled = true;
-    input.disabled = true;
+    elements.btn.disabled = true;
+    elements.input.disabled = true;
   }
 });
 
@@ -56,10 +57,10 @@ function updateCounter() {
   }
   const { days, hours, minutes, seconds } = convertMs(diff);
 
-  daysEl.textContent = addLeadingZero(days);
-  hoursEl.textContent = addLeadingZero(hours);
-  minutesEl.textContent = addLeadingZero(minutes);
-  secondsEl.textContent = addLeadingZero(seconds);
+  elements.days.textContent = addLeadingZero(days);
+  elements.hours.textContent = addLeadingZero(hours);
+  elements.minutes.textContent = addLeadingZero(minutes);
+  elements.seconds.textContent = addLeadingZero(seconds);
 }
 
 function addLeadingZero(value) {
