@@ -33,7 +33,8 @@ flatpickr('#datetime-picker', {
         message: 'Illegal options',
         position: 'topRight',
         backgroundColor: '#ef4040',
-        color: '#fff',
+        messageColor: '#fff',
+        titleColor: '#fff',
       });
     }
   },
