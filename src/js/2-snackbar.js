@@ -1,18 +1,15 @@
-import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
-const delayInput = document.querySelector('[name="delay"]');
-const states = document.querySelector('[name="state"]');
-
 
 form.addEventListener('submit', createPromise);
 
 function createPromise(event) {
   event.preventDefault();
 
-  const delay = parseInt(delayInput.value);
-  const state = states.value;
+  const delay = form.delay.value;
+  const state = form.state.value;
 
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -45,5 +42,5 @@ function createPromise(event) {
       });
     });
 
-    form.reset();
+  form.reset();
 }
