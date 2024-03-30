@@ -6,13 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snackbar</title>
     
-    <script type="module" crossorigin src="/goit-js-hw-10/assets/styles-3694e8d9.js"></script>
-    <link rel="stylesheet" href="/goit-js-hw-10/assets/styles-25050775.css">
+    <script type="module" crossorigin src="/goit-js-hw-10/assets/styles-ab9e8793.js"></script>
+    <script type="module" crossorigin src="/goit-js-hw-10/assets/vendor-77e16229.js"></script>
+    <link rel="stylesheet" href="/goit-js-hw-10/assets/styles-df1e6f19.css">
+    <link rel="stylesheet" href="/goit-js-hw-10/assets/vendor-7a007824.css">
   </head>
   <body>
     <section class="section-snack">
       <a class="link" href="./index.html">Go to home</a>
     </section>
+
+    <form class="form">
+      <label class="label-form">
+        Delay (ms)
+        <input class="input-form" type="number" name="delay" required />
+      </label>
+    
+      <fieldset class="field-form">
+        <legend class="legend-form">State</legend>
+        <label class="label-field">
+          <input class="input-field" type="radio" name="state" value="fulfilled" required />
+          Fulfilled
+        </label>
+        <label class="label-field">
+          <input class="input-field" type="radio" name="state" value="rejected" required />
+          Rejected
+        </label>
+      </fieldset>
+    
+      <button class="btn-form" type="submit">Create notification</button>
+    </form>
+    
 
     
   </body>
