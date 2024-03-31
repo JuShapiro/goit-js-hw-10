@@ -15,6 +15,7 @@ const elements = {
 
 let userSelectedDate;
 let intervalId = null;
+elements.startButton.disabled = true;
 
 flatpickr('#datetime-picker', {
   enableTime: true,
