@@ -5,8 +5,8 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const elements = {
-  input: document.querySelector('#datetime-picker'),
-  btn: document.querySelector('[data-start]'),
+  datetimePicker: document.querySelector('#datetime-picker'),
+  startButton: document.querySelector('[data-start]'),
   days: document.querySelector('[data-days]'),
   hours: document.querySelector('[data-hours]'),
   minutes: document.querySelector('[data-minutes]'),
@@ -14,6 +14,7 @@ const elements = {
 };
 
 let userSelectedDate;
+let intervalId = null;
 
 flatpickr('#datetime-picker', {
   enableTime: true,
@@ -25,9 +26,9 @@ flatpickr('#datetime-picker', {
     userSelectedDate = selectedDates[0];
     const currentDate = new Date();
     if (userSelectedDate > currentDate) {
-      elements.btn.disabled = false;
+      elements.startButton.disabled = false;
     } else {
-      elements.btn.disabled = true;
+      elements.startButton.disabled = true;
       iziToast.show({
         title: 'Error',
         message: 'Illegal options',
@@ -40,11 +41,11 @@ flatpickr('#datetime-picker', {
   },
 });
 
-elements.btn.addEventListener('click', () => {
-  if (elements.btn.disabled === false) {
-    setInterval(updateCounter, 1000);
-    elements.btn.disabled = true;
-    elements.input.disabled = true;
+elements.startButton.addEventListener('click', () => {
+  if (elements.startButton.disabled === false) {
+    intervalId = setInterval(updateCounter, 1000);
+    elements.startButton.disabled = true;
+    elements.datetimePicker.disabled = true;
   }
 });
 
@@ -53,7 +54,7 @@ function updateCounter() {
   const diff = userSelectedDate - currentDate;
 
   if (diff <= 0) {
-    clearInterval(updateCounter);
+    clearInterval(intervalId);
     return;
   }
   const { days, hours, minutes, seconds } = convertMs(diff);
